@@ -1,13 +1,20 @@
-name: Hello GitHub Actions
+name: CI/CD
+
 on:
   workflow_dispatch:
+
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Print message
-        run: echo "Hello from GitHub Actions!"
-      - name: Show date
-        run: date
-      - name: Show operating system
-        run: uname -a
+      - run: echo "Building..."
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Testing..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying..."
