@@ -1,42 +1,22 @@
-name: Build and Test Pipeline
+name: Artifact Demo
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 jobs:
-  build-and-test:
-    name: Build and Test
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
+      - name: Checkout code
         uses: actions/checkout@v6
-      - name: Setup Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
-      - name: Show Python version
-        run: python --version
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run tests
-        run: |
-          pytest -v
-      - name: Build application
+      - name: Run build
         run: |
           chmod +x build.sh
           ./build.sh
-      - name: Show build output
+      - name: Show build files
         run: |
+          echo "Build output:"
           ls -la build
-          cat build/build-info.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: calculator-build
+          name: session16-build
           path: build/
