@@ -1,20 +1,19 @@
-name: CI/CD
-
+name: Secrets Demo
 on:
-  workflow_dispatch:
-
+  push:
+    branches:
+           - main
 jobs:
-  build:
+  secrets-demo:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building..."
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Testing..."
-
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Deploying..."
+      - name: Check secret
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+        run: |
+          if [ -n "$DEMO_SECRET" ]; then
+            echo "Secret is available."
+          else
+            echo "Secret is not configured."
+            exit 1
+          fi
